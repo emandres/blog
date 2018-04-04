@@ -14,7 +14,7 @@ Hashing function have many uses in software. In essence, they are a tool for tak
 4. Chaotic - a small change in the input will produce an output so different that it is impossible to correlate the two by looking at outputs alone.
 5. Unique - it is infeasible to find two inputs that produce the same output.
 
-These five properties together form the basis of a cryptographic hashing function. The first property, determinism, is important because we need to know that we can trust the output of the function. The second, speed, makes it practical to work with the function. With property three, the one-way guarantee ensures that a level of privacy is maintained (i.e. if I hash some input with a secret key, it will be impossible to get that secret key back out of the hash). Property four, chaos, makes it difficult to make deductions about the input based on a series of outputs. The final property, uniqueness, makes it unlikely to run into collisions (where two different inputs produce the same output).
+These five properties together form the basis of a cryptographic hashing function. The first property, determinism, is important because we need to know that we can trust the output of the function. The second, speed, makes it practical to work with the function. With property three, the one-way guarantee ensures that a level of privacy is maintained (e.g. if I hash some input with a secret key, it will be impossible to get that secret key back out of the hash). Property four, chaos, makes it difficult to make deductions about the input based on a series of outputs. The final property, uniqueness, makes it unlikely to run into collisions (where two different inputs produce the same output).
 
 In cryptography, hashing functions are often used as message authentication code (MAC). A MAC is used to check the authenticity of the message (i.e. where the message came from). MACs that are produced by a hashing function are often referred to as HMACs.
 
@@ -43,7 +43,7 @@ To prevent this, we can add a secret when we calculate the MAC. The sender will 
 
 Unless the attacker knows the secret, it will be incredibly difficult to contrive a message that matches the given MAC (see property 5).
 
-    // secret = ??? - idk let's try 'foobar'
+    // secret = ??? - idk let's try 'password'
     { "message": "Give $100 to Eve", hmac: "56184" }
 
 This practice of authenticating a message using an HMAC is used in places where it is difficult to determine if an incoming request should be trusted. Notably, [OAuth 1](https://en.wikipedia.org/wiki/OAuth) uses a hashing algorithm and pre-shared keys to generate a hash on each request.
@@ -60,10 +60,10 @@ Let's imagine a simplistic hashing function.
 
     LENGTH_HASH(x) = LENGTH(x)
 
-That is, given some input `x`, we're going to return the length of the input in bytes. This brings us back to property 5: uniqueness. With this simplistic hashing function, many inputs produce the same output.
+That is, given some input `x`, we're going to return the length of the input in bytes. Consider property 5: uniqueness. With this simplistic hashing function, many inputs produce the same output.
 
-    LENGTH_HASH('foo') = 3
-    LENGTH_HASH('bar') = 3
+    LENGTH_HASH('puppies') = 7
+    LENGTH_HASH('kittens') = 7
 
 Depending on our use case, this might be good enough, but it's not really a hashing function. Let's consider something a little more complex.
 
